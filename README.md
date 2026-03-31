@@ -68,4 +68,17 @@ Contribuições são bem-vindas! Se você deseja adicionar suporte a outras dist
 ## 📄 Licença
 
 Este projeto é open-source. Use com responsabilidade e audite os scripts antes de rodá-los em ambientes de produção.
+
+## Break the glass
 ```
+# 1. Parar o serviço e desativar a inicialização
+sudo systemctl disable --now apparmor.service
+
+# 2. Remover a imposição de regras (caso algo ainda esteja na memória)
+sudo aa-teardown 2>/dev/null || true
+
+# 3. Remover o AppArmor do boot do Kernel (GRUB)
+sudo sed -i 's/apparmor=1 security=apparmor //' /etc/default/grub
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
+
